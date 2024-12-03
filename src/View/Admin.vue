@@ -4,25 +4,29 @@
     <form @submit.prevent="handleLogin">
       <div class="form-group">
         <label for="username">Username:</label>
-        <input 
-          id="username" 
-          type="text" 
-          v-model="form.username" 
-          placeholder="Enter your username" 
-          required 
+        <input
+          id="username"
+          type="text"
+          v-model="form.username"
+          placeholder="Enter your username"
+          required
         />
-        <small v-if="errors.username" class="error">{{ errors.username }}</small>
+        <small v-if="errors.username" class="error">{{
+          errors.username
+        }}</small>
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
-        <input 
-          id="password" 
-          type="password" 
-          v-model="form.password" 
-          placeholder="Enter your password" 
-          required 
+        <input
+          id="password"
+          type="password"
+          v-model="form.password"
+          placeholder="Enter your password"
+          required
         />
-        <small v-if="errors.password" class="error">{{ errors.password }}</small>
+        <small v-if="errors.password" class="error">{{
+          errors.password
+        }}</small>
       </div>
       <button type="submit">Login</button>
     </form>
@@ -31,19 +35,19 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
-import axios from 'axios';
+import { reactive, ref } from "vue";
+import axios from "axios";
 
-const API_URL = 'https://infracredit2.pythonanywhere.com/api/v1/export-csv';
+const API_URL = "https://infracredit2.pythonanywhere.com/api/v1/export-csv";
 
 // Predefined username and password
-const acceptedUsername = 'codeware';
-const acceptedPassword = 'Simple@123';
+const acceptedUsername = "codeware";
+const acceptedPassword = "Simple@123";
 
 // Reactive form data and errors
 const form = reactive({
-  username: '',
-  password: '',
+  username: "",
+  password: "",
 });
 
 const errors = reactive({
@@ -55,8 +59,8 @@ const loginMessage = ref(null);
 
 // Validate user input
 const validateForm = () => {
-  errors.username = !form.username ? 'Username is required.' : null;
-  errors.password = !form.password ? 'Password is required.' : null;
+  errors.username = !form.username ? "Username is required." : null;
+  errors.password = !form.password ? "Password is required." : null;
 };
 
 // Handle login logic
@@ -64,30 +68,31 @@ const handleLogin = async () => {
   validateForm();
 
   if (!errors.username && !errors.password) {
-    if (form.username === acceptedUsername && form.password === acceptedPassword) {
-      loginMessage.value = 'File Download in Progress';
-      alert('Welcome!');
+    if (
+      form.username === acceptedUsername &&
+      form.password === acceptedPassword
+    ) {
+      loginMessage.value = "File Download in Progress";
+      alert("Welcome!");
+      // Create a temporary anchor element to trigger download
+      const link = document.createElement("a");
+      link.href = API_URL;
+      link.download = "registeredData.csv"; // Name of the downloaded file
+      document.body.appendChild(link);
+      link.click();
 
-          // Create a temporary anchor element to trigger download
-          const link = document.createElement('a');
-          link.href = API_URL;
-          link.download = 'registeredData.csv'; // Name of the downloaded file
-          document.body.appendChild(link);
-          link.click();
+      // Clean up
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
 
-          // Clean up
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
-
-          alert('File downloaded successfully!');
-          loginMessage.value = '';
-      } else {
-      loginMessage.value = 'Invalid username or password. Please try again.';
-      alert('Login failed!');
+      alert("File downloaded successfully!");
+      loginMessage.value = " ";
+    } else {
+      loginMessage.value = "Invalid username or password. Please try again.";
+      alert("Login failed!");
     }
   }
 };
-
 </script>
 
 <style scoped>
@@ -171,13 +176,12 @@ pre {
   overflow-x: auto;
 }
 
-.form-select{
+.form-select {
   height: 40px;
   border-radius: 4px;
 }
 
-textarea{
+textarea {
   border-radius: 4px;
 }
 </style>
-
