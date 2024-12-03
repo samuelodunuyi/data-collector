@@ -65,35 +65,29 @@ const handleLogin = async () => {
 
   if (!errors.username && !errors.password) {
     if (form.username === acceptedUsername && form.password === acceptedPassword) {
-      loginMessage.value = 'Login successful!';
+      loginMessage.value = 'File Download in Progress';
       alert('Welcome!');
-      if (!errors.nin) {
-      try {
-        const response = await axios.get(API_URL);
-        console.log('Response:', response);
-        if(response.status==201){
-          alert('Form submitted successfully!');
-          form.nin= '',
-          form.first_name= '',
-          form.last_name= '',
-          form.school= '',
-          form.address= '',
-          form.course= '',
-          form.age= ''
-        }
-        console.log(response)
-      } catch (error) {
-        alert(error.response.data.error);
-      }
-    } else {
-      alert('Please fix the errors before submitting.');
-    }
-    } else {
+
+          // Create a temporary anchor element to trigger download
+          const link = document.createElement('a');
+          link.href = API_URL;
+          link.download = 'registeredData.csv'; // Name of the downloaded file
+          document.body.appendChild(link);
+          link.click();
+
+          // Clean up
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+
+          alert('File downloaded successfully!');
+          loginMessage.value = '';
+      } else {
       loginMessage.value = 'Invalid username or password. Please try again.';
       alert('Login failed!');
     }
   }
 };
+
 </script>
 
 <style scoped>
