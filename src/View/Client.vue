@@ -116,6 +116,8 @@
           form.school= '',
           form.address= '',
           form.course= '',
+          form.email= '',
+          form.phone_number= '',
           form.age= ''
         }
         console.log(response)

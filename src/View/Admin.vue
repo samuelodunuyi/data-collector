@@ -83,7 +83,7 @@ const handleLogin = async () => {
 
       // Clean up
       document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      URL.revokeObjectURL(API_URL);
 
       alert("File downloaded successfully!");
       loginMessage.value = " ";
