@@ -22,6 +22,14 @@
           <input id="lastName" type="text" v-model="form.last_name" required />
         </div>
         <div class="form-group">
+          <label for="lastName">Phone Number:</label>
+          <input id="lastName" type="tel" v-model="form.phone_number" required />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Email:</label>
+          <input id="lastName" type="email" v-model="form.email" required />
+        </div>
+        <div class="form-group">
           <label for="school">School:</label>
           <input id="school" type="text" v-model="form.school" required />
         </div>
@@ -67,6 +75,8 @@
     address: '',
     course: '',
     age: '',
+    email: '',
+    phone_number: ''
   });
   
   const errors = reactive({
